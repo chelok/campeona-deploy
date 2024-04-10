@@ -2,30 +2,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: encuestas-deployment
+  name: encuesta-deployment
   namespace: tiendas-rhino
   labels:
-    app: encuentas
+    app: encuesta
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: encuentas
+      app: encuesta
   template:
     metadata:
       labels:
-        app: encuentas
+        app: encuesta
     spec:
       containers:
-      - name: encuentas
-        image: southamerica-east1-docker.pkg.dev/diesel-talon-387022/encuestas/encuestas:latest
-        imagePullPolicy: Always
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 80
+        - name: encuesta
+          image: southamerica-east1-docker.pkg.dev/diesel-talon-387022/encuestas/encuestas:40ed0bfb5a442ea4c6af41d221e6dddbebd47831
+          imagePullPolicy: Always
+          env:
+            - name: ESTILO_PRODUCTOS
+              value: image_min
+            - name: NEXT_PUBLIC_SUCURSAL_ID
+              value: "163"
+            - name: NEXT_PUBLIC_API_TIENDA_ENDPOINT
+              value: "https://apitienda.rhinox.io/v1"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80

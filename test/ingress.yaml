@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tiendas-test
+  namespace: tiendas-test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    spec.ingressClassName: "gce"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  tls:
+    - hosts: 
+      - testcampeona.kocursoft.com
+      secretName: ssl-test-campeona-secret
+  rules:
+  - host: testcampeona.kocursoft.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: test-campeona-service
+            port:
+              number: 80

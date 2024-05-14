@@ -1,0 +1,38 @@
+# LA CAMPEONA SW TEST #
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-campeona-deployment
+  namespace: tiendas-test
+  labels:
+    app: test-campeona
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-campeona
+  template:
+    metadata:
+      labels:
+        app: test-campeona
+    spec:
+      containers:
+        - name: test-campeona
+          image: southamerica-east1-docker.pkg.dev/diesel-talon-387022/tienda-rhino/tienda-rhino:test-service-worker
+          imagePullPolicy: Always
+          env:
+            - name: ESTILO_PRODUCTOS
+              value: image_min
+            - name: NEXT_PUBLIC_SUCURSAL_ID
+              value: "138"
+            - name: NEXT_PUBLIC_API_TIENDA_ENDPOINT
+              value: "http://apitiendadev.rhinox.io/v1"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80

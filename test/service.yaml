@@ -1,0 +1,16 @@
+#  LA CAMPEONA SW TEST #
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "test-campeona-service"
+  namespace: tiendas-test
+  labels:
+    app: test-campeona
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 3000
+  selector:
+    app: test-campeona
+  type: "NodePort"
